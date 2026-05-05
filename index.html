@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego del Botón Escurridizo</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Ejercicio 4</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #zonaCentral {
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            left: 40%;
+            top: 40%;
+            border: 2px dashed black;
+            background: rgba(0, 0, 0, 0.02);
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        #centralButton {
+            position: absolute;
+        }
+    </style>
 </head>
-
 <body>
-    <main>
-        <!-- Zona central de 150x150 para ganar -->
-        <div id="centralZone">
-            <span>Zona de Victoria</span>
-        </div>
-
-        <!-- Botón que el usuario debe intentar clickear en el centro -->
-        <button id="btnGame">¡Atrápame!</button>
-    </main>
-
-    <script src="script.js"></script>
+    <div id="zonaCentral"></div>
+    <p></p>
+    <button id="centralButton">Haz clic aquí</button>
+    <script src="/programacion full stack/ejercicios random/ejercicio 4/ejercicio 4.js"></script>
 </body>
-
 </html>

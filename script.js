@@ -1,69 +1,54 @@
-// Seleccionamos el botón por su ID
-const btnGame = document.getElementById('btnGame');
+const button = document.getElementById('centralButton');
 
-// Función para mover el botón a una posición aleatoria
-function moveButton() {
-    // Calculamos el máximo de ancho y alto disponible restando el tamaño del botón
-    const maxX = window.innerWidth - btnGame.offsetWidth;
-    const maxY = window.innerHeight - btnGame.offsetHeight;
+function obtenerZonaCentral() {const width = window.innerWidth;
+    const height = window.innerHeight;
+    return {left: width * 0.4,
+        top: height * 0.4,
+        width: width * 0.2,
+        height: height * 0.2,};}
 
-    // Generamos coordenadas aleatorias
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
+function estaPuntoEnZona(x, y) {const zona = obtenerZonaCentral();
+    return x >= zona.left && x <= zona.left + zona.width && y >= zona.top && y <= zona.top + zona.height;}
 
-    // Aplicamos la nueva posición con estilos en línea (absolute)
-    btnGame.style.left = randomX + 'px';
-    btnGame.style.top = randomY + 'px';
-}
+function obtenerPosicionAleatoria() {const width = window.innerWidth;
+    const height = window.innerHeight;
+    const buttonRect = button.getBoundingClientRect();
+    const maxLeft = Math.max(0, width - buttonRect.width);
+    const maxTop = Math.max(0, height - buttonRect.height);
 
-// Función para comprobar si el botón está en la zona central
-/**
- * Funcion para comprobar si el boton esta en la zona central
- * @return {Boolean}
- */
-function estaEnElCentro() {
-    // Obtenemos la posición y tamaño del botón usando offset properties
-    const btnLeft = btnGame.offsetLeft; //version numerica del estilo left
-    const btnTop = btnGame.offsetTop; //version numerica del estilo top
-    const btnRight = btnLeft + btnGame.offsetWidth;
-    const btnBottom = btnTop + btnGame.offsetHeight;
+    return {left: Math.random() * maxLeft,
+        top: Math.random() * maxTop,};}
 
-    // Calculamos el centro de la pantalla para definir la zona
-    const screenCenterX = window.innerWidth / 2;
-    const screenCenterY = window.innerHeight / 2;
+function colocarBoton(position) {button.style.position = 'absolute';
+    button.style.left = `${position.left}px`;
+    button.style.top = `${position.top}px`;}
 
-    // Límites de la zona central (150x150)
-    const zoneLeft = screenCenterX - 75;
-    const zoneRight = screenCenterX + 75;
-    const zoneTop = screenCenterY - 75;
-    const zoneBottom = screenCenterY + 75;
+function colocarBotonFueraDelCentro() {
+    let position;
+    do {position = obtenerPosicionAleatoria();
+        const buttonCenterX = position.left + button.getBoundingClientRect().width / 2;
+        const buttonCenterY = position.top + button.getBoundingClientRect().height / 2;
+        if (!estaPuntoEnZona(buttonCenterX, buttonCenterY)) {
+            break;}} while (true);
 
-    // Comprobamos si alguna parte del botón está dentro de la zona (intersección)
-    const solapaHorizontal = btnLeft < zoneRight && btnRight > zoneLeft;
-    const solapaVertical = btnTop < zoneBottom && btnBottom > zoneTop;
+    colocarBoton(position);}
 
-    return solapaHorizontal && solapaVertical;
-}
+function moverBotonAleatoriamente() {const buttonRect = button.getBoundingClientRect();
+    const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+    const buttonCenterY = buttonRect.top + buttonRect.height / 2;
 
-// Evento cuando el mouse entra en el área del botón
-btnGame.addEventListener('mouseenter', function () {
-    // Solo se mueve si NO está en el centro
-    if (estaEnElCentro() === false) {
-        moveButton();
-    }
-});
+    if (estaPuntoEnZona(buttonCenterX, buttonCenterY)) {
+        alert("ganaste wachin");
+        return;}
 
-// Evento cuando el usuario hace clic en el botón
-btnGame.addEventListener('click', function () {
-    // Usamos la función para verificar si ganó
-    if (estaEnElCentro() === true) {
-        alert('¡Ganaste el juego! Has logrado atrapar el botón en el centro.');
-    } else {
-        console.log('Botón fuera de la zona central');
-    }
-});
+    const position = obtenerPosicionAleatoria();
+    colocarBoton(position);}
 
-// Posicionamos el botón inicialmente de forma aleatoria para empezar
-window.onload = function () {
-    moveButton();
-};
+window.addEventListener('load', () => {
+    colocarBotonFueraDelCentro();});
+
+window.addEventListener('resize', () => {
+    colocarBotonFueraDelCentro();});
+
+button.addEventListener('click', moverBotonAleatoriamente);
+
