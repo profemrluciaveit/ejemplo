@@ -1,0 +1,42 @@
+/* Estilos generales para centrar el contenido y limpiar márgenes */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    font-family: Arial, sans-serif;
+    overflow: hidden; /* Evita que aparezcan barras de desplazamiento si el botón se sale */
+}
+
+/* La zona central donde el usuario puede ganar */
+#centralZone {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed #3498db;
+    background-color: rgba(52, 152, 219, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Permite que el ratón pase a través de la zona para tocar el botón */
+}
+
+/* Estilos para el botón que se mueve */
+#btnGame {
+    position: absolute;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+}
+
+#btnGame:hover {
+    background-color: #c0392b;
+}

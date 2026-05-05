@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="boton.css">
+</head>
+<body>
+    <button>hola</button>
+    <section></section>
+    <script>
+        const boton = document.querySelector("button");
+
+        boton.addEventListener("mouseenter", function(e){
+            const positionX = boton.style.left;
+            const positionY = boton.style.top;
+            const factorX = window.innerWidth;
+            const factorY = window.innerHeight;
+
+            boton.style.left = Math.floor(Math.random()*factorX)+"px";
+            boton.style.top = Math.floor(Math.random()*factorY)+"px";
+            console.log(positionX, positionY)
+
+         if(positionX == window.innerWidth/2 && positionY == window.innerHeight/2){
+            alert("Ganaste");
+
+         }
+
+        })
+    </script>
+</body>
+</html>
